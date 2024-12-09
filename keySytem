@@ -399,7 +399,7 @@ local function IIST_fake_script() -- Fake Script: StarterGui.ScreenGui.LocalScri
 	
 	local screenGui = script.Parent
 	local keySystemFrame = screenGui:FindFirstChild("Frame") -- Replace with your frame's name
-	local correctKey = "fZWRaXAGwndmExWPVWUdGtyTU" -- Replace with your actual key
+	local correctKey = "XitALfevprCGCFVvcZqfKMFxBTfYqsn" -- Replace with your actual key
 	
 	local keyInput = keySystemFrame:FindFirstChild("KeyInput")
 	local validFrame = screenGui:FindFirstChild("Valid")
