@@ -18,7 +18,7 @@ local hwid = RbxAnalyticsService:GetClientId()
 -- Generate a random color
 local randomColor = math.random(0x000000, 0xFFFFFF)
 
-local currentTime = os.date("!*t") -- Get UTC time
+local currentTime = os.date("Asia/Jakarta") -- Get UTC time
 local timestamp = string.format("%s %02d:%02d:%02d UTC", os.date("%B"), currentTime.hour, currentTime.min, currentTime.sec)
 
 -- Get the ID of the Roblox game
@@ -250,7 +250,7 @@ local function SendFeedback()
     if feedbackText and feedbackText ~= "default box input" and currentTime - lastFeedbackTime >= cooldown then
         lastFeedbackTime = currentTime
         
-        local currentTime = os.date("!*t") -- Get UTC time
+        local currentTime = os.date("Asia/Jakarta") -- Get UTC time
         local timestamp = string.format("%s %02d:%02d:%02d UTC", os.date("%B"), currentTime.hour, currentTime.min, currentTime.sec)
         
         local gameId = game.GameId
