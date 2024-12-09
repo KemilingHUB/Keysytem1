@@ -449,7 +449,7 @@ local function IIST_fake_script() -- Fake Script: StarterGui.ScreenGui.LocalScri
 		if enterPressed and keyInput.Text == correctKey then
 			notifyValid()
 			keySystemFrame:Destroy() -- Delete key system immediately after correct key is entered
-			loadstring(game:HttpGet(("https://raw.githubusercontent.com/KemilingHUB/CDID/refs/heads/main/KemilingHUB"), true))()-- Run the script from the URL or any open source script for example i used infinite yield you can use any just remove inf yield loadstring and add your own
+			loadstring(game:HttpGet(("https://raw.githubusercontent.com/KemilingHUB/LocalGameID/refs/heads/main/KemilingHUB"), true))()-- Run the script from the URL or any open source script for example i used infinite yield you can use any just remove inf yield loadstring and add your own
 		elseif enterPressed then
 			notifyInvalid()
 		end
