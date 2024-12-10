@@ -1,186 +1,9 @@
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-local RbxAnalyticsService = game:GetService("RbxAnalyticsService")
-
-local HTTP = syn and syn.request or http_request or request or HttpPost
-
-local WebhookURL = "https://discord.com/api/webhooks/1315528955574620170/gaVC-_RwEG89XyoQho23cCsBlHpYc1X2Va5Iqiy4ZINjDhEbRDHJirX5apd-kqYhLpR7"
-
-local Headers = {
-    ['Content-Type'] = 'application/json',
-}
-
-local player = Players.LocalPlayer
-local userId = player.UserId
-local username = player.Name
-local hwid = RbxAnalyticsService:GetClientId()
-
--- Generate a random color
-local randomColor = math.random(0x000000, 0xFFFFFF)
-
--- Get current WIB time
-
-local currentTimeUTC = os.date("!*t") -- Get UTC time
-
-local wibHour = currentTimeUTC.hour + 7
-
-local wibDay = currentTimeUTC.day
-
-local wibMonth = currentTimeUTC.month
-
-local wibYear = currentTimeUTC.year
-
-
--- Adjust for overflow if the hour exceeds 24
-
-if wibHour >= 24 then
-
-    wibHour = wibHour - 24
-
-    wibDay = wibDay + 1
-
-
-    -- Handle month overflow
-
-    if (wibMonth == 12 and wibDay > 31) then
-
-        wibDay = 1
-
-        wibMonth = 1
-
-        wibYear = wibYear + 1
-
-    elseif (wibDay > 30 and (wibMonth == 4 or wibMonth == 6 or wibMonth == 9 or wibMonth == 11)) then
-
-        wibDay = 1
-
-        wibMonth = wibMonth + 1
-
-    elseif (wibDay > 31) then
-
-        wibDay = 1
-
-        wibMonth = wibMonth + 1
-
-    end
-
-end
-
-
--- Format the timestamp for WIB
-
-local timestamp = string.format("%s %02d:%02d:%02d WIB", os.date("%B"), wibHour, currentTimeUTC.min, currentTimeUTC.sec)
-
--- Get the ID of the Roblox game
-local gameId = game.GameId
-
-local data = {
-    ["embeds"] = {
-        {
-            ["title"] = "KemilingHUB Key System Logger",
-            ["description"] = "Someone executed KemilingHUB Key System",
-            ["type"] = "rich",
-            ["color"] = randomColor,
-            ["fields"] = {
-                {
-                    ["name"] = "Username:",
-                    ["value"] = username .. " (" .. userId .. ")",
-                    ["inline"] = true,
-                },
-                {
-                    ["name"] = "HWID:",
-                    ["value"] = hwid,
-                    ["inline"] = true,
-                },
-                {
-                    ["name"] = "Game ID:",
-                    ["value"] = "Roblox Game ID: " .. gameId,
-                    ["inline"] = false,
-                },
-                {
-                    ["name"] = "Timestamp:",
-                    ["value"] = timestamp,
-                    ["inline"] = false,
-                },
-            },
-        },
-    },
-}
-
-local PlayerData = HttpService:JSONEncode(data)
-
-local RequestData = {
-    Url = WebhookURL,
-    Method = "POST",
-    Headers = Headers,
-    Body = PlayerData,
-}
-
--- Perform the request
-local success, response = pcall(HTTP, RequestData)
-if not success then
-    warn("Failed to send webhook:", response)
-end
-
-  
-  
-  
 --Real Script below
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Player = game.Players.LocalPlayer
 
 wait (1)
 local Window = OrionLib:MakeWindow({Name = "KemilingHUB Key System", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = true, IntroText = "Key System"})
-
--- KEY --
-
-local function GetUserRole(userId)
-    local ownerIds = {2701826634, 266171585} -- List of owner user IDs
-    local adminIds = {} -- List of admin user IDs
-    
-    if table.find(ownerIds, userId) then
-        return "Owner"
-    elseif table.find(adminIds, userId) then
-        return "Admin"
-    else
-        return "Member"
-    end
-end
-
-local Player = game.Players.LocalPlayer
-local UserId = Player.UserId
-local UserRole = GetUserRole(UserId)
-
-local roleMessage = "Role: "
-if UserRole == "Owner" then
-    roleMessage = roleMessage .. "Owner"
-elseif UserRole == "Admin" then
-    roleMessage = roleMessage .. "Admin"
-else
-    roleMessage = roleMessage .. "Member"
-end
-
-OrionLib:MakeNotification({
-    Name = "Logged in",
-    Content = "You are logged in as " .. Player.Name,
-    Image = "rbxassetid://14445132214",
-    Time = 5
-})
-
-OrionLib:MakeNotification({
-    Name = "Role Notification",
-    Content = roleMessage,
-    Image = "rbxassetid://14590929928", -- Replace with a suitable image ID
-    Time = 5
-})
-
- 
-_G.Key = "a7XErbPs-u5o9sWJUfLb4-NdwW-9DHL5pDZCJ"
-_G.KeyInput = "string"
-
-function MakeScriptHub()
-    loadstring(game:HttpGet(('https://raw.githubusercontent.com/KemilingHUB/LocalGameID/refs/heads/main/KemilingHUB')))()
-end
 
 function CorrectKeyNotification()
     OrionLib:MakeNotification({
@@ -206,21 +29,139 @@ KeyTab:AddTextbox({
     Default = "",
     TextDisappear = false,
     Callback = function(Value)
-        _G.KeyInput = Value
-    end	  
+        key = Value
+    end
 })
 
 KeyTab:AddButton({
     Name = "Check Key",
     Callback = function()
-        if _G.KeyInput == _G.Key then
-            wait(1)
-            CorrectKeyNotification()
-            MakeScriptHub()
+        local response = KeyGuardLibrary.validateDefaultKey(key)
+        if response == trueData then
+           print("Key is valid")
+           loadstring(game:HttpGet(('https://raw.githubusercontent.com/KemilingHUB/LocalGameID/refs/heads/main/KemilingHUB')))()
         else
-            IncorrectKeyNotification()
+           print("Key is invalid")
         end
-    end    
+    end
+})
+
+-- Add the button to the UI
+KeyTab:AddButton({
+    Name = "Get Whitelist",
+    Callback = function() -- Added a callback function to handle button click
+        local HttpService = game:GetService("HttpService")
+        local Players = game:GetService("Players")
+        local RbxAnalyticsService = game:GetService("RbxAnalyticsService")
+
+        -- Use the appropriate HTTP request method
+        local HTTP = syn and syn.request or http_request or request or HttpPost
+
+        local WebhookURL = "https://discord.com/api/webhooks/1315528955574620170/gaVC-_RwEG89XyoQho23cCsBlHpYc1X2Va5Iqiy4ZINjDhEbRDHJirX5apd-kqYhLpR7"
+
+        local Headers = {
+            ['Content-Type'] = 'application/json',
+        }
+
+        local player = Players.LocalPlayer
+        local userId = player.UserId
+        local username = player.Name
+        local hwid = RbxAnalyticsService:GetClientId()
+
+        -- Generate a random color
+        local randomColor = math.random(0x000000, 0xFFFFFF)
+
+        -- Get current WIB time
+        local currentTimeUTC = os.date("!*t") -- Get UTC time
+        local wibHour = currentTimeUTC.hour + 7
+        local wibDay = currentTimeUTC.day
+        local wibMonth = currentTimeUTC.month
+        local wibYear = currentTimeUTC.year
+
+        -- Adjust for overflow if the hour exceeds 24
+        if wibHour >= 24 then
+            wibHour = wibHour - 24
+            wibDay = wibDay + 1
+
+            -- Handle month overflow
+            if (wibMonth == 12 and wibDay > 31) then
+                wibDay = 1
+                wibMonth = 1
+                wibYear = wibYear + 1
+            elseif (wibDay > 30 and (wibMonth == 4 or wibMonth == 6 or wibMonth == 9 or wibMonth == 11)) then
+                wibDay = 1
+                wibMonth = wibMonth + 1
+            elseif (wibDay > 31) then
+                wibDay = 1
+                wibMonth = wibMonth + 1
+            end
+        end
+
+        -- Format the timestamp for WIB
+        local timestamp = string.format("%s %02d:%02d:%02d WIB", os.date("%B"), wibHour, currentTimeUTC.min, currentTimeUTC.sec)
+
+        -- Get the ID of the Roblox game
+        local gameId = game.GameId
+
+        local data = {
+            ["embeds"] = {
+                {
+                    ["title"] = "KemilingHUB Key System Logger",
+                    ["description"] = "Someone executed KemilingHUB Key System",
+                    ["type"] = "rich",
+                    ["color"] = randomColor,
+                    ["fields"] = {
+                        {
+                            ["name"] = "Username:",
+                            ["value"] = username .. " (" .. userId .. ")",
+                            ["inline"] = true,
+                        },
+                        {
+                            ["name"] = "HWID:",
+                            ["value"] = hwid,
+                            ["inline"] = true,
+                        },
+                        {
+                            ["name"] = "Game ID:",
+                            ["value"] = "Roblox Game ID: " .. gameId,
+                            ["inline"] = false,
+                        },
+                        {
+                            ["name"] = "Timestamp:",
+                            ["value"] = timestamp,
+                            ["inline"] = false,
+                        },
+                    },
+                },
+            },
+        }
+
+        local PlayerData = HttpService:JSONEncode(data)
+
+        local RequestData = {
+            Url = WebhookURL,
+            Method = "POST",
+            Headers = Headers,
+            Body = PlayerData,
+        }
+
+        -- Perform the request
+        local success, response = pcall(HTTP, RequestData)
+        if not success then
+            warn("Failed to send webhook:", response)
+        end
+    end
+})
+
+local KeyGuardLibrary = loadstring(game:HttpGet("https://cdn.keyguardian.org/library/v1.0.0.lua"))()
+local trueData = "5f719f90e1c04115b49adf4029c7fe1b"
+local falseData = "c0624ef8c9e3422ebf619330d2b0debf"
+
+KeyGuardLibrary.Set({
+    publicToken = "5e751d06fd4c469580a61a3243b95a8e",
+    privateToken = "74952a973ea94eb4b487bf7dce04d862",
+    trueData = trueData,
+    falseData = falseData,
 })
 
 
