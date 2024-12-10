@@ -5,18 +5,16 @@ local Player = game.Players.LocalPlayer
 wait (1)
 local Window = OrionLib:MakeWindow({Name = "KemilingHUB Key System", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = true, IntroText = "Key System"})
 
-function CorrectKeyNotification()
-    OrionLib:MakeNotification({
-        Name = "Correct Key!",
-        Content = "You have entered the correct key!",
-        Imagine = "rbxassetid://14445221506",
-        Time = 5
-    })
-end
+local KeyGuardLibrary = loadstring(game:HttpGet("https://cdn.keyguardian.org/library/v1.0.0.lua"))()
+local trueData = "93bbc456fe3c45b2b1dfd753c6d333c3"
+local falseData = "de623d4b93074abdbcd84745262d5de5"
 
-function IncorrectKeyNotification()
-    loadstring(game:HttpGet(('https://pastebin.com/raw/BKQZkhWa'), true))()
-end
+KeyGuardLibrary.Set({
+  publicToken = "5e751d06fd4c469580a61a3243b95a8e",
+  privateToken = "74952a973ea94eb4b487bf7dce04d862",
+  trueData = trueData,
+  falseData = falseData,
+})
 
 local KeyTab = Window:MakeTab({
     Name = "Key",
@@ -152,18 +150,6 @@ KeyTab:AddButton({
         end
     end
 })
-
-local KeyGuardLibrary = loadstring(game:HttpGet("https://cdn.keyguardian.org/library/v1.0.0.lua"))()
-local trueData = "5f719f90e1c04115b49adf4029c7fe1b"
-local falseData = "c0624ef8c9e3422ebf619330d2b0debf"
-
-KeyGuardLibrary.Set({
-    publicToken = "5e751d06fd4c469580a61a3243b95a8e",
-    privateToken = "74952a973ea94eb4b487bf7dce04d862",
-    trueData = trueData,
-    falseData = falseData,
-})
-
 
 KeyTab:AddButton({
     Name = "Get Discord Server Invite",
