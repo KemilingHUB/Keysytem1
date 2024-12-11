@@ -183,16 +183,16 @@ Tab:AddParagraph("Use Responsibility",
 "If you're not in agreement with these terms, it's best to abstain from using this hub.")
 
 
-local otherTab = Window:MakeTab({
-	Name = "Others",
+local supportTab = Window:MakeTab({
+	Name = "Support",
 	Icon = "rbxassetid://14491865074",
 	PremiumOnly = false
 })
 
-otherTab:AddParagraph("Welcome to KemilingHUB",
+supportTab:AddParagraph("Welcome to KemilingHUB",
 "Discovering a bug or glitch? We've got you covered! Our cutting-edge feedback system is your direct line to us. Your input is an essential part of our mission to create the ultimate experience. Don't hold back—let us know, and we'll dive into action, ensuring swift fixes and seamless updates.")
 
-otherTab:AddParagraph("Guidelines for Providing Feedback",
+supportTab:AddParagraph("Guidelines for Providing Feedback",
 "Your voice matters, and we're here to listen. For optimal efficiency, we've implemented a 5-minute cooldown/limit on feedback submissions. Make each message count, and share your thoughts constructively. We kindly request that you uphold the spirit of respectful engagement. Any misuse or trolling of this system may lead to blacklisting from the hub. To ensure fairness, we keep track of usernames and their associated Roblox user IDs, cultivating an environment of mutual respect and collaboration.")
  
 local HttpService = game:GetService("HttpService")
@@ -212,7 +212,7 @@ local userId = player.UserId
 local username = player.Name
 local hwid = RbxAnalyticsService:GetClientId()
 
-local feedbackText = "Put Feedback"  -- Default text for the feedback textbox
+local feedbackText = ""  -- Default text for the feedback textbox
 local lastFeedbackTime = 0
 local cooldown = 300  -- 5 minutes in seconds
 
@@ -291,14 +291,14 @@ end
 -- Replace with the actual way you create the GUI elements
 -- Tab:AddTextbox and Tab:AddButton remain unchanged
 
-otherTab:AddTextbox({
+supportTab:AddTextbox({
     Name = "Input Feedback",
     Default = feedbackText,
     TextDisappear = false,
     Callback = UpdateFeedback,
 })
 
-otherTab:AddButton({
+supportTab:AddButton({
     Name = "Send Feedback",
     Callback = SendFeedback,
 })
