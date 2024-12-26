@@ -153,7 +153,7 @@ KeyTab:AddButton({
 
 KeyTab:AddButton({
     Name = "Get Discord Server Invite",
-    Callback = function() setclipboard("https://discord.gg/695MBB7NhV")
+    Callback = function() setclipboard("https://discord.gg/pGjCrnDXHP")
               print("Discord server invite in clipboard ")
     end
 })
@@ -227,8 +227,34 @@ local function SendFeedback()
     if feedbackText and feedbackText ~= "default box input" and currentTime - lastFeedbackTime >= cooldown then
         lastFeedbackTime = currentTime
         
-        local currentTime = os.date("!*t") -- Get UTC time
-        local timestamp = string.format("%s %02d:%02d:%02d UTC", os.date("%B"), currentTime.hour, currentTime.min, currentTime.sec)
+        -- Get current WIB time
+        local currentTimeUTC = os.date("!*t") -- Get UTC time
+        local wibHour = currentTimeUTC.hour + 7
+        local wibDay = currentTimeUTC.day
+        local wibMonth = currentTimeUTC.month
+        local wibYear = currentTimeUTC.year
+
+        -- Adjust for overflow if the hour exceeds 24
+        if wibHour >= 24 then
+            wibHour = wibHour - 24
+            wibDay = wibDay + 1
+
+            -- Handle month overflow
+            if (wibMonth == 12 and wibDay > 31) then
+                wibDay = 1
+                wibMonth = 1
+                wibYear = wibYear + 1
+            elseif (wibDay > 30 and (wibMonth == 4 or wibMonth == 6 or wibMonth == 9 or wibMonth == 11)) then
+                wibDay = 1
+                wibMonth = wibMonth + 1
+            elseif (wibDay > 31) then
+                wibDay = 1
+                wibMonth = wibMonth + 1
+            end
+        end
+
+        -- Format the timestamp for WIB
+        local timestamp = string.format("%s %02d:%02d:%02d WIB", os.date("%B"), wibHour, currentTimeUTC.min, currentTimeUTC.sec)
         
         local gameId = game.GameId
         
