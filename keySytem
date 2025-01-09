@@ -6,8 +6,8 @@ wait (1)
 local Window = OrionLib:MakeWindow({Name = "KemilingHUB Key System", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest", IntroEnabled = true, IntroText = "Key System"})
 
 local KeyGuardLibrary = loadstring(game:HttpGet("https://cdn.keyguardian.org/library/v1.0.0.lua"))()
-local trueData = "93bbc456fe3c45b2b1dfd753c6d333c3"
-local falseData = "de623d4b93074abdbcd84745262d5de5"
+local trueData = "3f11d3bedecc49a4854f8f4d4961d140"
+local falseData = "5576565314d54bb38a0a36f14779b3a7"
 
 KeyGuardLibrary.Set({
   publicToken = "5e751d06fd4c469580a61a3243b95a8e",
@@ -55,7 +55,7 @@ KeyTab:AddButton({
         -- Use the appropriate HTTP request method
         local HTTP = syn and syn.request or http_request or request or HttpPost
 
-        local WebhookURL = "https://discord.com/api/webhooks/1315528955574620170/gaVC-_RwEG89XyoQho23cCsBlHpYc1X2Va5Iqiy4ZINjDhEbRDHJirX5apd-kqYhLpR7"
+        local WebhookURL = "https://discord.com/api/webhooks/1326816223312347168/1ZeokWRGQaaW7SOi6rTBR6NkN2WnAgVQxVV_f9pvQ55I6UNlBiJbBiDdch-Iu2YUBib8"
 
         local Headers = {
             ['Content-Type'] = 'application/json',
@@ -201,7 +201,7 @@ local RbxAnalyticsService = game:GetService("RbxAnalyticsService")
 
 local HTTP = syn and syn.request or http_request or request or HttpPost
 
-local discordWebhookURL = "https://discord.com/api/webhooks/1222529607882772591/oj2_DsFHZpi7oOS4eeFU7yck-41EigCpjlmNmdAq11gFujmPx9Rsqc1qapqjLlWAwJHm"
+local discordWebhookURL = "https://discord.com/api/webhooks/1326814458751877122/IYCN8qHMMNsHGP5fKuUz47a5jte0L8aDtg7jORG_PVpW9jHKt71teVcrw4oLZIE84GFH"
 
 local headers = {
     ['Content-Type'] = 'application/json',
@@ -227,34 +227,8 @@ local function SendFeedback()
     if feedbackText and feedbackText ~= "default box input" and currentTime - lastFeedbackTime >= cooldown then
         lastFeedbackTime = currentTime
         
-        -- Get current WIB time
-        local currentTimeUTC = os.date("!*t") -- Get UTC time
-        local wibHour = currentTimeUTC.hour + 7
-        local wibDay = currentTimeUTC.day
-        local wibMonth = currentTimeUTC.month
-        local wibYear = currentTimeUTC.year
-
-        -- Adjust for overflow if the hour exceeds 24
-        if wibHour >= 24 then
-            wibHour = wibHour - 24
-            wibDay = wibDay + 1
-
-            -- Handle month overflow
-            if (wibMonth == 12 and wibDay > 31) then
-                wibDay = 1
-                wibMonth = 1
-                wibYear = wibYear + 1
-            elseif (wibDay > 30 and (wibMonth == 4 or wibMonth == 6 or wibMonth == 9 or wibMonth == 11)) then
-                wibDay = 1
-                wibMonth = wibMonth + 1
-            elseif (wibDay > 31) then
-                wibDay = 1
-                wibMonth = wibMonth + 1
-            end
-        end
-
-        -- Format the timestamp for WIB
-        local timestamp = string.format("%s %02d:%02d:%02d WIB", os.date("%B"), wibHour, currentTimeUTC.min, currentTimeUTC.sec)
+        local currentTime = os.date("!*t") -- Get UTC time
+        local timestamp = string.format("%s %02d:%02d:%02d UTC", os.date("%B"), currentTime.hour, currentTime.min, currentTime.sec)
         
         local gameId = game.GameId
         
